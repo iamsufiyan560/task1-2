@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clifford: "#da373d",
+              "custom-dark-blue": "#002",
+              "custom-blue": "#002e94",
+            },
+          },
+        },
+      };
+    </script>
+    <script
+      src="https://kit.fontawesome.com/696d1d32bb.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <title>HOME PAGE</title>
+  </head>
+  <body>
+    <header
+      class="fixed shadow-3xl top-0 left-0 w-full z-50 bg-[#F0F0F0] rounded-sm"
+    >
+      <div class="flex justify-between mt-4 lg:ml-32 sm:ml-4 p-[8px] sm:pb-4">
+        <a href="#">
+          <span
+            ><img
+              class="lg:w-[20vw] sm:w-[28vw]"
+              src="https://sdlms.deepthought.education/assets/uploads/files/system/site-logo.svg"
+              alt="" /></span
+        ></a>
+        <div class="cursor-pointer lg:mr-32 sm:mr-2 gap-between-4 space-x-4">
+          <a
+            title="Home"
+            class="fas fa-home component-1-icon bg-[#3683f0] rounded-full p-2 text-white"
+            aria-hidden="true"
+          ></a>
+          <a
+            title="Explore assets"
+            class="fa fa-binoculars component-1-icon bg-[#3683f0] rounded-full p-2 text-white"
+            aria-hidden="true"
+          ></a>
+          <a
+            title="Edit Profile"
+            class="fas fa-tools component-1-icon bg-[#3683f0] rounded-full p-2 text-white"
+            aria-hidden="true"
+          ></a>
+          <a
+            title="Notifications"
+            class="fas fa-bell component-1-icon bg-[#3683f0] rounded-full p-2 text-white"
+            aria-hidden="true"
+          ></a>
+
+          <a
+            title="View More"
+            class="fas fa-ellipsis-v ellipsis text-blue-600"
+            aria-hidden="true"
+          ></a>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div
+        class="w-[100%] h-[700px] bg-gradient-to-r from-custom-dark-blue to-custom-blue relative"
+      >
+        <div class="text-white lg:pt-[160px] pl-10 lg:pr-36 sm:pr-2">
+          <div class="flex justify-between sm:px-2">
+            <div>
+              <h1 class="text-[2.75rem] font-medium pt-24 hidden lg:block">
+                Technical Project Management
+              </h1>
+              <h1 class="text-[2.75rem] font-medium pt-20 block lg:hidden">
+                Technical <br />
+                Project <br />
+                Management
+              </h1>
+              <p class="lg:pt-8 sm:pt-2" id="short_description"></p>
+              <div class="lg:pt-12 sm:pt-4">
+                <a
+                  href="journey-board.html"
+                  class="bg-blue-500 p-2 px-4 rounded-lg hover:text-black sm:mt-8 cursor-pointer"
+                >
+                  Go to Journey-Board
+                </a>
+              </div>
+            </div>
+
+            <div
+              class="lg:w-[400px] lg:h-[400px] sm:pt-44 lg:pt-2 sm:w-[1000px] sm:h-[400px]"
+            >
+              <img id="project-image" class="rounded-[10px]" />
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:ml-6 sm:ml-8 absolute lg:mt-[18px] mt-16">
+          <div class="lg:flex lg:flex-row-reverse gap-8 lg:mb-8 sm:mb-28">
+            <div
+              class="lg:w-[464px] sm:w-[700px] md:w-[800px] bg-white shadow-2xl rounded-lg h-[386px] relative border mt-8"
+            >
+              <div
+                class="absolute mt-[-50px] lg:ml-32 sm:ml-60 md:ml-80 hover:mt-[-54px]"
+              >
+                <img
+                  src="https://sdlms.deepthought.education/assets//uploads/files/images/dt_logo.png"
+                  class="rounded-circle h-[180px] w-[180px]"
+                />
+              </div>
+              <div class="text-center mt-8" style="padding-top: 120px">
+                <h3 style="font-weight: 600" class="text-[28px]">
+                  Deep Thought
+                </h3>
+                <hr class="my-4 ml-6 mr-6" />
+                <p class="mb-4 px-4">
+                  DT powers the teams of futuristic startups. Young contributors
+                  unlearn, relearn with us, to create socio-economic value. DT
+                  repositions the education industry, <br />
+                  DT is India's answer to Tesla
+                </p>
+                <a
+                  class="text-blue-600 hover:underline"
+                  href="https://deepthought.education"
+                  >Explore more</a
+                >
+              </div>
+            </div>
+            <div
+              class="bg-white border lg:w-[961px] sm:w-[700px] md:w-[800px] md:mr-2 h-[738px] shadow-3xl rounded-lg sm:mt-8 sm:mr-4"
+            >
+              <div>
+                <div>
+                  <h5 class="text-[20px] py-4 px-6">Opportunity Description</h5>
+                </div>
+              </div>
+              <div
+                class="pl-8 pt-8 bg-[#f8f9fa] border rounded-b-lg pr-8 text-[16px]"
+              >
+                <div>
+                  <div class="pb-8 gap-4 flex flex-col" id="description"></div>
+                </div>
+                <div class="font-bold">Learning outcomes</div>
+                <div class="mb-4">
+                  <ul id="learning_outcomes" style="list-style: disc"></ul>
+                </div>
+                <div class="font-bold">Pre-requisties</div>
+                <div class="">
+                  <ul id="pre_requisites" style="list-style: disc"></ul>
+                </div>
+                <div>
+                  <div class="py-8">
+                    <b>Duration of time expected to accomplish:</b> &nbsp; 4
+                    hours
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer class="mb-12">
+            <div class="row align-items-center justify-content-xl-between">
+              <div class="m-auto text-center">
+                <div class="">
+                  <p>©️ DTthon Course by Shagun</p>
+                </div>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </main>
+
+    <!--  -->
+    <!--  -->
+    <!--  -->
+    <!--  -->
+    <!--  -->
+    <!--  -->
+    <!--  -->
+    <!--  -->
+    <!--  -->
+    <script>
+      document.addEventListener("DOMContentLoaded", (event) => {
+        console.log("DOM fully loaded and parsed");
+        fetchData();
+      });
+
+      async function fetchData() {
+        try {
+          const response = await fetch("data.json");
+          const data = await response.json();
+          displayData(data);
+        } catch (error) {
+          console.error("Error fetching the data:", error);
+        }
+      }
+
+      function displayData(data) {
+        document.getElementById("description").innerHTML = data.description;
+        document.getElementById("short_description").innerHTML =
+          data.short_description;
+        document.getElementById("project-image").src = data.project_image;
+
+        const learningOutcomesList =
+          document.getElementById("learning_outcomes");
+        if (!learningOutcomesList) {
+          console.error('Element with id "learning_outcomes" not found');
+          return;
+        }
+        console.log('Element with id "learning_outcomes" found');
+        data.learning_outcomes.forEach((outcome) => {
+          const li = document.createElement("li");
+          li.textContent = outcome;
+          learningOutcomesList.appendChild(li);
+        });
+
+        const preRequisitesList = document.getElementById("pre_requisites");
+        if (!preRequisitesList) {
+          console.error('Element with id "pre_requisites" not found');
+          return;
+        }
+        console.log('Element with id "pre_requisites" found');
+        data.pre_requisites.forEach((prerequisite) => {
+          const li = document.createElement("li");
+          li.textContent = prerequisite;
+          preRequisitesList.appendChild(li);
+        });
+      }
+    </script>
+  </body>
+</html>
+
+<!-- 
+https://www.figma.com/proto/hrBbLgcBWyoomChuEKFmpn/Web-Development-Assignment?node-id=20287-195&t=AOIoCQ4YNKL2gTuk-0&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1 -->
