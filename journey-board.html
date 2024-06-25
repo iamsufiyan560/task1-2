@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <title>JOURNEY_BOARD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clifford: "#da373d",
+              "custom-dark-blue": "#002",
+              "custom-blue": "#002e94",
+            },
+          },
+        },
+      };
+    </script>
+    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+    <script
+      src="https://kit.fontawesome.com/696d1d32bb.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://kit.fontawesome.com/a076d05399.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <style>
+      .editor-container .cke {
+        box-shadow: 0px 4px 4px 0px #00000040;
+        border-radius: 0.5rem; /* Apply rounded corners */
+      }
+      */ .editor-container {
+        padding-top: 0.5rem;
+        padding-right: 0.5rem;
+        padding-left: 0.5rem;
+        /* No padding bottom */
+        box-shadow: 0px 4px 4px 0px #00000040;
+        border-radius: 0.5rem; /* Apply rounded corners */
+        height: calc(100% - 2rem); /* Adjust to fit within parent */
+      }
+      .cke {
+        height: 100% !important;
+        box-shadow: none;
+        border: none;
+      }
+      .cke_contents {
+        height: calc(
+          100% - 40px
+        ) !important; /* Adjust height to fit within the toolbar */
+      }
+
+      .rhombus {
+        position: relative;
+        width: 50px;
+        height: 50px;
+        border: 2px solid #3683f0;
+        transform: rotate(45deg);
+      }
+
+      .rhombus span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-45deg);
+        color: #3683f0;
+        font-size: 18px;
+      }
+      .video-container {
+        position: relative;
+        width: 480px; /* Adjust as per your design */
+        height: 320px; /* Adjust as per your design */
+        border: 1px solid #ccc;
+        overflow: hidden;
+      }
+
+      .video-container .thumbnail {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .video-container .thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .video-container video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+  <body class="relative min-h-screen">
+    <!--  -->
+    <!--  -->
+    <!--  -->
+    <header
+      class="fixed shadow-3xl top-0 left-0 w-full z-50 bg-[#F0F0F0] rounded-sm"
+    >
+      <div class="flex justify-between mt-4 lg:ml-32 sm:ml-4 p-[8px] sm:pb-4">
+        <a href="#">
+          <span
+            ><img
+              class="lg:w-[20vw] sm:w-[28vw]"
+              src="https://sdlms.deepthought.education/assets/uploads/files/system/site-logo.svg"
+              alt="" /></span
+        ></a>
+        <div class="cursor-pointer lg:mr-32 sm:mr-2 gap-between-4 space-x-4">
+          <a
+            title="Home"
+            class="fas fa-home component-1-icon bg-[#3683f0] rounded-full p-2 text-white"
+            aria-hidden="true"
+          ></a>
+          <a
+            title="Explore assets"
+            class="fa fa-binoculars component-1-icon bg-[#3683f0] rounded-full p-2 text-white"
+            aria-hidden="true"
+          ></a>
+          <a
+            title="Edit Profile"
+            class="fas fa-tools component-1-icon bg-[#3683f0] rounded-full p-2 text-white"
+            aria-hidden="true"
+          ></a>
+          <a
+            title="Notifications"
+            class="fas fa-bell component-1-icon bg-[#3683f0] rounded-full p-2 text-white"
+            aria-hidden="true"
+          ></a>
+
+          <a
+            title="View More"
+            class="fas fa-ellipsis-v ellipsis text-blue-600"
+            aria-hidden="true"
+          ></a>
+        </div>
+      </div>
+    </header>
+    <!--  -->
+    <!--  -->
+    <!--  -->
+    <!--  -->
+
+    <div class="flex">
+      <aside
+        id="sidebar"
+        class="w-[132px] h-[692px] bg-[#FDFDFD] border mt-[84px] fixed box-shadow left-0 rounded-lg overflow-hidden transition-width duration-300 z-50"
+      >
+        <div class="flex justify-between bg-black">
+          <div class="h-[50px] flex items-center">
+            <span id="one" class="text-white text-[18px] mt-2 pl-8 hidden"
+              >Journey Board</span
+            >
+          </div>
+          <a
+            id="toggle-btn"
+            title="Toggle Sidebar"
+            class="fas fa-arrow-left bg-white rounded-full p-2 text-black mr-4 mt-4 mb-4 cursor-pointer"
+            aria-hidden="true"
+          ></a>
+        </div>
+        <div class="flex justify-center mt-4">
+          <div
+            class="rhombus border-2 border-blue-500 transform rotate-45 w-[50px] h-[50px] flex items-center justify-center"
+          >
+            <span class="transform -rotate-45 text-blue-500">1</span>
+          </div>
+        </div>
+        <div class="hidden" id="sidebar-content">
+          <div class="font-bold mt-4 ml-4">Explore the world of management</div>
+          <div class="ml-8 mt-4 font-medium">
+            <ul id="learning_outcomes" style="list-style: disc">
+              <li>Technical Project Managment</li>
+              <li>Threadbuild</li>
+              <li>Structure your points</li>
+              <li>$SA Method</li>
+            </ul>
+          </div>
+        </div>
+      </aside>
+
+      <main class="ml-[132px] flex-1 p-8 mt-[84px]">
+        <div class="flex justify-between">
+          <h1
+            class="text-2xl mb-4 font-bold text-[#0029FF]"
+            style="
+              font-size: 28px;
+              font-weight: 700;
+              line-height: 42px;
+              letter-spacing: 0.02em;
+              text-align: left;
+            "
+          >
+            Technical Project Managment
+          </h1>
+          <button
+            class="mr-64 w-[121px] h-[36px] bg-[#0029FF] text-white rounded-full hover:bg-blue-500"
+          >
+            Submit Task
+          </button>
+        </div>
+        <div class="">
+          <div
+            style="
+              width: 175.5px;
+              height: 394px;
+              top: 108px;
+              left: 1345px;
+              gap: 0px;
+              border-radius: 30px 0px 0px 30px;
+              opacity: 0px;
+            "
+            class="absolute right-0 border shadow-2xl border"
+          >
+            <div
+              class="text-white"
+              style="
+                background-color: black;
+                width: 95px;
+                height: 394px;
+                top: 108px;
+                left: 1345px;
+                gap: 0px;
+                border-radius: 30px 0px 0px 30px;
+                opacity: 0px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+              "
+            >
+              <i class="fas fa-times mb-4 text-2xl"></i>
+              <div>N</div>
+              <div>O</div>
+              <div>T</div>
+              <div>I</div>
+              <div>C</div>
+              <div>E</div>
+              <div class="mt-4"></div>
+              <!-- This empty div is for space -->
+              <div>B</div>
+              <div>O</div>
+              <div>A</div>
+              <div>R</div>
+              <div>D</div>
+            </div>
+          </div>
+        </div>
+
+        <!--  -->
+
+        <!--  -->
+        <div
+          style="
+            width: 1066px;
+            height: 135px;
+            top: 187px;
+            left: 187px;
+            gap: 0px;
+            border-radius: 5px 0px 0px 0px;
+            opacity: 0px;
+            background: #e9ecef;
+          "
+        >
+          <div>
+            <h1
+              class="text-2xl pt-4 pl-4 pb-2 font-bold"
+              style="
+                font-size: 28px;
+                font-weight: 700;
+                line-height: 42px;
+                letter-spacing: 0.02em;
+                text-align: left;
+              "
+            >
+              Explore the World of management
+            </h1>
+            <p id="task_description" class="pl-4 pr-2"></p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <!--  -->
+          <!--  -->
+          <!--  -->
+          <!--  -->
+          <div>
+            <div
+              style="
+                box-shadow: 0px -4px 4px 0px #00000040;
+                margin-top: 4rem;
+                box-shadow: 0px 4px 4px 0px #00000040;
+                background: #fdfdfd;
+                width: 480px;
+                height: 580px;
+                top: 397px;
+                left: 214px;
+                gap: 0px;
+                border-radius: 15px 0px 0px 0px;
+                opacity: 0px;
+              "
+            >
+              <div class="flex justify-between bg-black">
+                <div class="h-[50px] flex items-center">
+                  <span class="text-white text-[18px] mt-2 pl-8"
+                    >Technical Project management</span
+                  >
+                </div>
+                <a
+                  class="fa fa-info bg-white rounded-full p-2 text-black mr-4 mt-4 mb-4 cursor-pointer"
+                  aria-hidden="true"
+                >
+                </a>
+              </div>
+
+              <div class="text-[14px] p-4">
+                <p>
+                  <span class="font-bold"> Description: </span>
+                  Story of Alignment Scope of Agility Specific Accountable
+                  Staggering Approach
+                </p>
+              </div>
+              <div class="video-container">
+                <div class="thumbnail"></div>
+                <iframe
+                  width="480"
+                  height="320"
+                  src="https://www.youtube.com/embed/TiMRwri1xJ8?autoplay=0&controls=1"
+                  title="Technological Project Management"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                ></iframe>
+              </div>
+            </div>
+          </div>
+          <!--  -->
+          <!--  -->
+          <!--  -->
+          <!-- 2 -->
+
+          <div
+            class="rounded-lg"
+            style="
+              box-shadow: 0px -4px 4px 0px #00000040;
+              margin-top: 4rem;
+              box-shadow: 0px 4px 4px 0px #00000040;
+              background: rgba(253, 253, 253, 1);
+
+              width: 480px;
+              height: 580px;
+              top: 397px;
+              left: 214px;
+              gap: 0px;
+
+              opacity: 0px;
+            "
+          >
+            <div class="flex justify-between bg-black rounded-lg">
+              <div class="h-[50px] flex items-center">
+                <span class="text-white text-[18px] mt-2 pl-8"
+                  >Threadbuild
+                </span>
+              </div>
+              <a
+                class="fa fa-info bg-white rounded-full p-2 text-black mr-4 mt-4 mb-4 cursor-pointer"
+                aria-hidden="true"
+              >
+              </a>
+            </div>
+
+            <div class="text-[14px] p-4">
+              <p>
+                <span class="font-bold"> Description: </span>
+                Watch the video and thread build, and jot out key threads while
+                watching that video.
+              </p>
+            </div>
+            <div class="bg-yellow-50 h-[40px] flex border box-shadow">
+              <a class="font-bold text-2xl p-1 pl-2">^</a>
+              <p class="font-bold text-xl p-2 pb-1 ml-20">Thread A</p>
+            </div>
+
+            <section class="flex gap-8 mt-8 ml-4">
+              <div
+                class="shadow-2xl border w-[199px] h-[70px] bg-[#f8f9fa] rounded-md"
+              >
+                <p class="text-[14px] mb-1 p-2">Sub thread 1</p>
+                <div class="w-full h-full rounded-t-md bg-white">
+                  <input
+                    class="p-2"
+                    type="text"
+                    placeholder="Enter text here"
+                  />
+                </div>
+              </div>
+              <div
+                class="shadow-2xl border w-[199px] h-[70px] bg-[#f8f9fa] rounded-t-md"
+              >
+                <p class="text-[14px] mb-1 p-2">Sub Interpretation 1</p>
+                <div class="w-full h-full rounded-t-md bg-white">
+                  <input
+                    class="p-2"
+                    type="text"
+                    placeholder="Enter text here"
+                  />
+                </div>
+              </div>
+            </section>
+
+            <div class="mt-16 pl-16 flex justify-between items-center">
+              <div class="flex space-x-4 mr-8">
+                <i style="font-size: 24px" class="fas">&#xf0eb;</i>
+                <i class="material-icons">&#xe0b7;</i>
+                <i style="font-size: 24px" class="fas">&#xf059;</i>
+              </div>
+              <div class="flex space-x-4 pr-8">
+                <select
+                  id="category1"
+                  name="category1"
+                  class="mt-1 w-[130px] pl-1 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md bg-white border"
+                >
+                  <option value="">Select Category</option>
+                  <option value="category1">Category 1</option>
+                  <option value="category2">Category 2</option>
+                  <option value="category3">Category 3</option>
+                </select>
+                <select
+                  id="category2"
+                  name="category2"
+                  class="mt-1 w-[130px] pl-3 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md bg-white border"
+                >
+                  <option value="">Select Process</option>
+                  <option value="process1">Process 1</option>
+                  <option value="process2">Process 2</option>
+                  <option value="process3">Process 3</option>
+                </select>
+              </div>
+            </div>
+
+            <div
+              class="mt-4 bg-[#0029FF] font-medium text-sm w-[110px] rounded-md ml-8 text-white"
+            >
+              <div class="flex p-2 gap-2">
+                <p class="">+</p>
+                <button>Sub-thread</button>
+              </div>
+            </div>
+
+            <div class="ml-8 mt-4 rounded-lg">
+              <div
+                class="shadow-2xl border w-[425px] h-[70px] bg-[#f8f9fa] rounded-t-md"
+              >
+                <p class="text-[14px] mb-1 p-2">Summary for Thread A</p>
+                <div class="w-full h-full rounded-t-md bg-white">
+                  <input
+                    class="p-2 h-full w-full"
+                    type="text"
+                    placeholder="Enter text here"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 3 -->
+          <!--  -->
+          <!--  -->
+          <!--  -->
+          <!--  -->
+          <div
+            class="rounded-lg shadow-2xl"
+            style="
+              box-shadow: 0px -4px 4px 0px #00000040;
+              margin-top: 4rem;
+              box-shadow: 0px 4px 4px 0px #00000040;
+              background: #fdfdfd;
+              width: 480px;
+              height: 580px;
+              top: 397px;
+              left: 214px;
+              gap: 0px;
+              border-radius: 15px 0px 0px 0px;
+              opacity: 0px;
+            "
+          >
+            <div>
+              <div class="flex justify-between bg-black">
+                <div class="h-[50px] flex items-center">
+                  <span class="text-white text-[18px] mt-2 pl-8"
+                    >Structure you pointerst</span
+                  >
+                </div>
+                <a
+                  class="fa fa-info bg-white rounded-full p-2 text-black mr-4 mt-4 mb-4 cursor-pointer"
+                  aria-hidden="true"
+                >
+                </a>
+              </div>
+
+              <div class="text-[14px] p-4">
+                <p>
+                  <span class="font-bold"> Description: </span>
+                  Write a 400-500 word article, from your thread. Publish your
+                  understanding, and showcase your learning to the entire world.
+                </p>
+              </div>
+
+              <div>
+                <div class="h-full border-t">
+                  <p class="mt-4 ml-4 capitalize font-bold">title</p>
+                  <input
+                    class="w-[422px] h-[43px] border outline-none p-2 ml-4 mt-4 shadow-xl rounded-lg"
+                    type="text"
+                    name=""
+                    id=""
+                  />
+                </div>
+              </div>
+
+              <div class="h-[200px]">
+                <p class="mt-4 ml-4 capitalize font-bold">Content</p>
+                <div class="editor-container ml-4 mt-4">
+                  <textarea name="editor1" id="editor1" rows="10" cols="40">
+                       Enter Text here
+                    </textarea
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 4 -->
+          <!--  -->
+          <!--  -->
+          <!--  -->
+          <!--  -->
+          <!--  -->
+          <div>
+            <div
+              style="
+                box-shadow: 0px -4px 4px 0px #00000040;
+                margin-top: 4rem;
+                box-shadow: 0px 4px 4px 0px #00000040;
+                background: #fdfdfd;
+                width: 480px;
+                height: 580px;
+                top: 397px;
+                left: 214px;
+                gap: 0px;
+                border-radius: 15px 0px 0px 0px;
+                opacity: 0px;
+              "
+            >
+              <div class="flex justify-between bg-black">
+                <div class="h-[50px] flex items-center">
+                  <span class="text-white text-[18px] mt-2 pl-8"
+                    >4SA Method</span
+                  >
+                </div>
+                <a
+                  class="fa fa-info bg-white rounded-full p-2 text-black mr-4 mt-4 mb-4 cursor-pointer"
+                  aria-hidden="true"
+                >
+                </a>
+              </div>
+
+              <div class="text-[14px] p-4">
+                <p>
+                  <span class="font-bold"> Description: </span>
+                  To explore more read more
+                </p>
+              </div>
+
+              <div>
+                <div
+                  class="h-full border-t flex w-[434px] h-[43px] bg-[#F2F2F2] mb-4 ml-4"
+                >
+                  <i class="material-icons p-2">&#xe316;</i>
+                  <p class="p-2 capitalize font-bold">Introduction</p>
+                </div>
+                <span class="ml-4"
+                  >The 4SA Method, How to bring a idea intoo progress?</span
+                >
+                <div class="flex justify-end mr-16 mt-4 text-[#606161]">
+                  <p>See More</p>
+                </div>
+              </div>
+
+              <div>
+                <div
+                  class="h-full border-t flex w-[434px] h-[43px] bg-[#F2F2F2] mb-4 mt-4 ml-4"
+                >
+                  <i class="material-icons p-2">&#xe316;</i>
+                  <p class="p-2 capitalize font-bold">Thread A</p>
+                </div>
+                <span class="ml-4 mr-4 flex justify-center"
+                  >How are you going to develop your stratergy ? Which method
+                  are you going to use to develop a stratergy ? What if the
+                  project is lengthy?</span
+                >
+                <div class="flex justify-end mr-16 mt-4 text-[#606161]">
+                  <p>See More</p>
+                </div>
+
+                <div
+                  class="h-full border shadow-2xl flex w-[434px] h-[43px] mb-4 mt-4 ml-4"
+                >
+                  <p class="p-2 capitalize font-bold">Example 1</p>
+                </div>
+                <span class="mr-4 flex justify-center"
+                  >You have a concept. How will you put into progress</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!--  -->
+          <!--  -->
+          <!--  -->
+          <!-- <div
+            class="fixed bottom-0 right-0 flex flex-col items-center gap-2 p-4"
+          >
+            <div
+              class="w-20 h-20 bg-[#0029FF] flex items-center justify-center rounded-full"
+            >
+              <img
+                src="public/question-sign.png"
+                alt="Image 1"
+                class="w-3/4 h-3/4 filter invert"
+              />
+            </div>
+            <div
+              class="w-20 h-20 bg-[#0029FF] flex items-center justify-center rounded-full"
+            >
+              <img
+                src="public/meeting.png"
+                alt="Image 2"
+                class="w-3/4 h-3/4 filter invert"
+              />
+            </div>
+            <div
+              class="w-20 h-20 bg-[#0029FF] flex items-center justify-center rounded-full"
+            >
+              <img
+                src="public/schedule.png"
+                alt="Image 3"
+                class="w-3/4 h-3/4 filter invert"
+              />
+            </div>
+          </div> -->
+        </div>
+      </main>
+      <div
+        class="absolute bottom-0 right-0 flex flex-col items-center gap-2 p-4"
+      >
+        <div
+          class="w-20 h-20 bg-[#0029FF] flex items-center justify-center rounded-full"
+        >
+          <img
+            src="public/question-sign.png"
+            alt="Image 1"
+            class="w-3/4 h-3/4 filter invert"
+          />
+        </div>
+        <div
+          class="w-20 h-20 bg-[#0029FF] flex items-center justify-center rounded-full"
+        >
+          <img
+            src="public/meeting.png"
+            alt="Image 2"
+            class="w-3/4 h-3/4 filter invert"
+          />
+        </div>
+        <div
+          class="w-20 h-20 bg-[#0029FF] flex items-center justify-center rounded-full"
+        >
+          <img
+            src="public/schedule.png"
+            alt="Image 3"
+            class="w-3/4 h-3/4 filter invert"
+          />
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const toggleBtn = document.getElementById("toggle-btn");
+      const sidebar = document.getElementById("sidebar");
+      const sidebarContent = document.getElementById("sidebar-content");
+      const rhombus = document.querySelector(".rhombus");
+      const header = document.getElementById("one");
+
+      toggleBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("w-[392px]");
+        if (sidebar.classList.contains("w-[392px]")) {
+          sidebarContent.classList.remove("hidden");
+          rhombus.classList.add("hidden");
+          toggleBtn.classList.remove("fa-arrow-right");
+          toggleBtn.classList.add("fa-arrow-left");
+          header.classList.remove("hidden");
+        } else {
+          sidebarContent.classList.add("hidden");
+          rhombus.classList.remove("hidden");
+          toggleBtn.classList.remove("fa-arrow-left");
+          toggleBtn.classList.add("fa-arrow-right");
+          header.classList.add("hidden");
+        }
+      });
+
+      CKEDITOR.replace("editor1", {
+        height: 300,
+        toolbarGroups: [
+          { name: "basicstyles", groups: ["basicstyles", "cleanup"] },
+          {
+            name: "paragraph",
+            groups: ["list", "indent", "blocks", "align", "bidi"],
+          },
+          { name: "links" },
+          { name: "insert" },
+          { name: "styles" },
+          { name: "colors" },
+          { name: "tools" },
+          { name: "others" },
+        ],
+      });
+
+      document.addEventListener("DOMContentLoaded", (event) => {
+        console.log("DOM fully loaded and parsed");
+        fetchData();
+      });
+
+      async function fetchData() {
+        try {
+          const response = await fetch("data.json");
+          const data = await response.json();
+          displayData(data);
+        } catch (error) {
+          console.error("Error fetching the data:", error);
+        }
+      }
+
+      function displayData(data) {
+        document.getElementById("task_description").innerHTML =
+          data.tasks[0].task_description;
+      }
+      const thumbnail = document.querySelector(".thumbnail");
+      const video = document.getElementById("myVideo");
+
+      thumbnail.addEventListener("click", function () {
+        thumbnail.style.display = "none"; // Hide thumbnail when clicked
+        video.style.display = "block"; // Display video element
+        video.play(); // Start playing the video
+      });
+    </script>
+  </body>
+</html>
